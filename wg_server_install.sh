@@ -10,6 +10,39 @@ function println(){ builtin echo -e "${WC}${1}${NC}"; }
 function printerr(){ builtin echo -e "${WCE}${1}${NC}"; }
 
 # WireGuard VPN server setup script
+
+# NL
+# Aangepaste en uitgebreidere versie van het script dat gebruikt wordt door Hetzner. 
+# Wijzigingen en uitbreidingen in een notendop:
+
+# - standalone installatie script
+# - controle van de DNS records indien een domeinnaam ingevoerd wordt
+# - mogelijkheid om web interface beschikbaar te stellen via het IPv4 adres
+#   - aanmaken van een self-signed SSL certificaat hiervoor
+# - script kan opnieuw uitgevoerd worden
+#   - geen "factory reset" van de VPS meer nodig voor het
+#     - aanpassen van een vergeten web interface admin wachtwoord
+#     - veranderen op welke manier de web interface bereikbaar is
+#       - IPv4 > domeinnaam
+#       - domeinnaam > IPv4
+#       - domeinnaam > andere domeinnaam
+# - script stopt met uitvoeren indien er onverwachte fouten voorkomen
+# - default DNS van Google ipv Cloudflare
+# - gebruik van Nginx
+#   - configuratie van https server voor IPv4 web interface
+#     - toepassen self-signed SSL certificaat
+#     - reverse proxy
+#     - HTTP redirect
+#   - uitbreidbaar door gebruiker (bvb. reverse proxy voor alle soorten internetverkeer, niet alleen HTTPs) 
+# - gebruik van Caddy voor domeinnaam web interface
+#   - automatische aanvraag en hernieuwing van SSL certificaat met eenvoudigere configuratie dan met Nginx & certbot
+# - installatie van miniupnpd
+#   - inactief,
+#   - indien later geconfigureerd door gebruiker
+#     - laat dit VPN clients toe om extern IP adres te vragen aan de VPN server ipv. aan een derde partij
+
+
+# EN
 # This is a modified and extended version of the WireGuard setup script used by Hetzner.
 # In this process WireGuard and the wireguard-ui web interface will be installed.
 
@@ -36,6 +69,7 @@ function printerr(){ builtin echo -e "${WCE}${1}${NC}"; }
 # - install miniupnpd package
 #   - (!) inactive/dormant unless configured and activated manually
 #   - to allow VPN clients to request the public ip without having to rely on IP info providers (such as ip.me)
+
 
 cat <<EOF
  _________________________________________________________________________
@@ -615,3 +649,16 @@ else
 fi
 
 echo -en "\n"
+
+# todo
+# echo -en "system_uptime=no
+# uuid=1ed759ff-3493-4b57-a691-b5193111e8f2
+# force_igd_desc_v1=no
+# ext_ifname=eth0
+# listening_ip=wg0
+
+# # No UPnP for all ports, the daemon is added to enable external-ip resolving client-side
+# deny 0-65535 0.0.0.0/0 0-65535" > /etc/miniupnpd/miniupnpd.conf 
+
+# systemctl enable miniupnpd
+# systemctl start miniupnpd

@@ -621,10 +621,10 @@ println "*** Reloading wireguard.."
 systemctl reload wg-quick@wg0.service &>/dev/null || systemctl start wg-quick@wg0.service &> /dev/null
 
 println "*** Adding wireguard watcher to startup.."
-systemctl enable wg-quick-watcher@wg0.{path,service} &> /dev/null
+systemctl enable wg-quick-watcher@wg0.{path,service} &> /dev/null || true
 
 println "*** Reloading wireguard watcher.."
-systemctl reload wg-quick-watcher@wg0.{path,service} &>/dev/null || systemctl start wg-quick-watcher@wg0.{path,service} &> /dev/null
+systemctl reload wg-quick-watcher@wg0.{path,service} &>/dev/null || systemctl start wg-quick-watcher@wg0.{path,service} &> /dev/null || true
 
 # Enable the firewall
 println "*** Adding nftables firewall to startup.."
@@ -650,7 +650,7 @@ fi
 
 echo -en "\n"
 
-# todo
+# Example UPnP using miniupnpd
 # echo -en "system_uptime=no
 # uuid=1ed759ff-3493-4b57-a691-b5193111e8f2
 # force_igd_desc_v1=no

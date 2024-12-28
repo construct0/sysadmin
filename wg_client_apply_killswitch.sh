@@ -30,4 +30,4 @@ iptables -A OUTPUT ! -o wg0 -j DROP
 netfilter-persistent save
 
 # Shows the iptables rules
-iptables --list
+# iptables --list

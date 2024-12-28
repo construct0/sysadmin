@@ -1,4 +1,5 @@
 #!/bin/bash
+set -x 
 
 # Example killswitch, requires iptables-persistent, netfilter-persistent, ipcalc
 # and wireguard client to be configured at /etc/wireguard/wg0.conf

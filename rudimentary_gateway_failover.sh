@@ -31,7 +31,7 @@ switchGateway(){
 		echo "*** $(date +"[%Y-%m-%d %H:%M:%S]") Switching gateway to $PRIMARY_GATEWAY"
 		ip route change default via $PRIMARY_GATEWAY dev $ETH_IF proto static
 	else
-		echo "*** $(date +"[%Y-%m-%d %H:%M:%S]") .."
+		echo "*** $(date +"[%Y-%m-%d %H:%M:%S]") Error: unable to switch gateway, unexpected active gateway: $ACTIVE_GATEWAY"
 		# ..
 	fi
 

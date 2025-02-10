@@ -72,6 +72,7 @@ do
 				# Attempt comms through primary gateway
 				switchGateway
 				performRequest
+    				RES=$?
 
 				if [ $RES -gt 0  ]; then
 					# If it failed, switch back to the failover gateway
